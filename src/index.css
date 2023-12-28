@@ -31,4 +31,10 @@ body {
   .register-form input::placeholder {
     color: rgb(96, 107, 107);
   }
+  .container-register-form{
+    padding: 1.4rem;
+    width: 100%;
+    
+
+  }
 }
