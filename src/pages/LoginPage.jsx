@@ -1,30 +1,19 @@
-import { useEffect } from "react";
+
 import { LoginForm } from "../components/forms/LoginForm";
-import { axiosUsers } from "../config/axiosUsers";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
 
+  const {signIn, errors}=useAuth();
 
-
-  useEffect(() => {
-    getUsers();
-  }, [])
-  
-
-
-
- const getUsers= async ()=>{
-    const resp=await axiosUsers.get("/sales");
-    console.log(resp);
-  }
 
 
 
   const loginClick = (user) => {
-    console.log(user);
+    signIn(user);
   };
 
-  return <LoginForm loginClick={(user) => loginClick(user)} />;
+  return <LoginForm loginClick={loginClick} errors={{errors}} />;
 };
 
 export default LoginPage;

@@ -15,3 +15,9 @@ export const registerRequest = async (user) =>axiosUsers.post(`register`, user);
 export const loginRequest = async (user) => axiosUsers.post(`login`, user);
 
 export const logoutRequest = async () => axiosUsers.post(`logout`);
+
+
+
+//debo crear esa ruta en el backend todavia
+
+export const getAllusersRequest = ()=>{axiosUsers(`users`)}

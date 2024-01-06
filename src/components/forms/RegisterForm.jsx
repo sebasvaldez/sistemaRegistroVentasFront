@@ -1,5 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const RegisterForm = ({ registerClick }) => {
   const [newUser, setNewUser] = useState({
@@ -63,6 +64,12 @@ export const RegisterForm = ({ registerClick }) => {
         >
           Registrar
         </Button>
+        <p className=" pt-5">
+        Si ya tienes una cuenta
+        <Link to="/login" className=" text-decoration-none">
+          Click aqui
+        </Link>
+      </p>
       </form>
     </div>
   );
