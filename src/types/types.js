@@ -1,8 +1,8 @@
 export const types = {
 
   auth: {
-    Login: "LOGIN [Auth]",
-    Logout: "LOGOUT [Auth]",
+    login: "LOGIN [Auth]",
+    logout: "LOGOUT [Auth]",
     errorMsg: "ERROR [Auth]",
   },
 

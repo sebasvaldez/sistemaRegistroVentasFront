@@ -1,7 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useRoutes, Outlet } from "react-router-dom";
+import { useState } from "react";
+import { AuthProvider } from "../providers/AuthProvider";
 
-export const PublicRoutes = ({ children, isLogged }) => {
-  const path = localStorage.getItem("lastRoute") || "/dashboard";
+export const PublicRoutes = ({ children, isLogged,rol }) => {
+  // const path = localStorage.getItem("lastRoute") || "/dashboard";
 
-  return !isLogged ? children : <Navigate to={path} />;
+  
+ return children;
+  // return children;
 };

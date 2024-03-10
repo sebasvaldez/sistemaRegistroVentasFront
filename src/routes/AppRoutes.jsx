@@ -1,33 +1,26 @@
-import { Route, Routes } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { PrivateRoutes } from "./PrivateRoutes";
-import { PublicRoutes } from "./PublicRoutes";
 import { AuthContext } from "../contexts/Authcontext";
+import { GeneralLayout } from "../layouts/GeneralLayout";
 import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
-import { AuthLayout } from "../layouts/AuthLayout";
-import { GeneralLayout } from "../layouts/GeneralLayout";
 
 export const AppRoutes = () => {
   const { state } = useContext(AuthContext);
+
   const isLogged = state.isLogged;
-  //   const isLogged= true;
+const rol= state.user.rol;
+
   return (
     <Routes>
-      <Route
-        path="/auth/*"
-        element={
-          <PublicRoutes isLogged={isLogged}>
-            <AuthLayout />
-          </PublicRoutes>
-        }
-      />
+      <Route path="/auth/login" element={<LoginPage />} />
 
       <Route
-        path="/*"
+      path="*"
         element={
           <PrivateRoutes isLogged={isLogged}>
-            <GeneralLayout />
+            <GeneralLayout rol={rol}/>
           </PrivateRoutes>
         }
       />
