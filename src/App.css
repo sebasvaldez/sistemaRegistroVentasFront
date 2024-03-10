@@ -22,7 +22,7 @@ body {
     padding: 10%;
   }
   .css-1jrn2fe-MuiGrid-root {
-    height: 70vh !important;
+    height: 60vh !important;
   }
   .css-gadse4-MuiPaper-root-MuiGrid-root {
     background-color: rgb(247, 247, 247) !important;
@@ -37,6 +37,6 @@ body {
     padding-bottom: 2%;
   }
   .css-1jrn2fe-MuiGrid-root {
-    height: 90vh !important;
+    height: 70vh !important;
   }
 }

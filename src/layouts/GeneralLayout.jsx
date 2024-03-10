@@ -7,24 +7,16 @@ export const GeneralLayout = ({ rol }) => {
   if (rol == "admin") {
     return (
       <Routes>
-        <Route path="/dashboard/admin" element={<DashboardAdminPage />} />
-        <Route path="/auth/register" element={<RegisterPage />} />
+        <Route path="/admin" element={<DashboardAdminPage />} />
+        <Route path="/admin/register" element={<RegisterPage />} />
       </Routes>
     );
   } else if (rol == "seller") {
     return (
       <Routes>
-        <Route path="/dashboard/seller" element={<DashboardSellerPage />} />
+        <Route path="/seller" element={<DashboardSellerPage />} />
       </Routes>
     );
-  } else {
-    return <h1>Usuario no autorizado, su rol no está definido.</h1>;
   }
 
-  // return (
-  //   <Routes>
-  //     <Route path="/dashboard/admin" element={<DashboardAdminPage />} />
-  //     <Route path="/dashboard/seller" element={<DashboardSellerPage />} />
-  //   </Routes>
-  // )
 };

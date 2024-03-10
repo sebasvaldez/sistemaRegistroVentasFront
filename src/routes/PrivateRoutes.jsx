@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/Authcontext";
 
 export const PrivateRoutes = ({children, isLogged}) => {
-  const {  loading, isAuthenticated } = useContext(AuthContext);
+  const {  loading } = useContext(AuthContext);
 
   // const { pathname } = useLocation();
   // localStorage.setItem("lastRoute", pathname);
@@ -24,7 +24,7 @@ export const PrivateRoutes = ({children, isLogged}) => {
     
     return <Navigate to="/auth/login"  replace/>;
   }else{
-    return children ? children : <Outlet />;
+    return children;
   }
   
   
