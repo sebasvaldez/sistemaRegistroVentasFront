@@ -24,22 +24,17 @@ const initialValues = {
 };
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialValues);
-  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const checkToken = async () => {
     const cookies = Cookies.get();
     if (!cookies.token) {
-      setUserData({});
       setLoading(false);
-      setIsAuthenticated(false);
       return;
     }
     try {
       const { data } = await verifyTokenRequest();
       setLoading(false);
-      setIsAuthenticated(true);
       axiosConnection.interceptors.request.use((config) => {
         config.headers = {
           ...config.headers,
@@ -63,22 +58,16 @@ export const AuthProvider = ({ children }) => {
       });
       if (data) {
         setLoading(false);
-        setUserData(data);
-        setIsAuthenticated(true);
       }
     } catch (error) {
       console.log(error);
-      setUserData({});
-      setIsAuthenticated(false);
     }
   };
 
   const login = async (user) => {
     try {
       const { data } = await loginRequest(user);
-      setUserData(data);
       setLoading(false);
-      setIsAuthenticated(true);
 
       const objectStorage = {
         user: {
@@ -108,9 +97,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ state, login, loading, checkToken, isAuthenticated }}
-    >
+    <AuthContext.Provider value={{ state, login, loading, checkToken }}>
       {children}
     </AuthContext.Provider>
   );

@@ -25,14 +25,13 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (isLogged) {
-      if ((rol = "admin")) {
-        return navigate("/dashboard/admin");
-      }
-      if ((rol = "seller")) {
-        return navigate("/dashboard/seller");
-      }
+   if(isLogged && rol.includes("admin")) {
+      navigate("/dashboard/admin");
+    } 
+    if(isLogged && rol.includes("seller")) {
+      navigate("/dashboard/seller");
     }
+    
   }, [isLogged]);
 
   return (

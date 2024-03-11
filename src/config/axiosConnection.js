@@ -13,5 +13,6 @@ export const axiosConnection = axios.create({
 export const loginRequest = async (user) => axiosConnection.post("/login", user);
 export const registerRequest = async (user) => axiosConnection.post("/register", user);
 export const verifyTokenRequest = async () => axiosConnection.get("/verify");
-
 export const logoutRequest = async ()=> axiosConnection.get("/logout");
+
+

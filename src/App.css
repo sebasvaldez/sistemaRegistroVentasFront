@@ -40,3 +40,10 @@ body {
     height: 70vh !important;
   }
 }
+
+@media all and (min-width: 1024px) {
+  
+  .css-1jrn2fe-MuiGrid-root {
+    height: 90vh !important;
+  }
+}
