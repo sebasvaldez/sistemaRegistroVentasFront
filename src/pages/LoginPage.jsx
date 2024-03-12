@@ -15,7 +15,7 @@ export const LoginPage = () => {
   const { login, state } = useContext(AuthContext);
 
   let isLogged = state.isLogged;
-  let rol = state.user.rol;
+  let rol = state.user?.rol;
 
   const navigate = useNavigate();
   const randomImage = imagenes[Math.floor(Math.random() * imagenes.length)];

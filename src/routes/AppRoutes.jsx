@@ -13,13 +13,13 @@ export const AppRoutes = () => {
   const { state } = useContext(AuthContext);
 
   const isLogged = state.isLogged;
-  console.log(isLogged)
-  const rol=state.user.rol;
+  const rol=state.user?.rol;
 
   return (
     <Routes>
+      
       <Route
-        path="/auth/*"
+        path="/*"
         element={<LoginPage />}
       />
       <Route

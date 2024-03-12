@@ -92,12 +92,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      await logoutRequest();
+      Cookies.remove("token");
+      dispatch({
+        type: types.auth.logout,
+        payload: initialValues,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     checkToken();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ state, login, loading, checkToken }}>
+    <AuthContext.Provider value={{ state, login, loading, checkToken, logout }}>
       {children}
     </AuthContext.Provider>
   );

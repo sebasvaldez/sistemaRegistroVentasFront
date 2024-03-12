@@ -1,9 +1,9 @@
-// import {AppBar} from '../components/ui/AppBar'
-
+import { DrawerDashboard } from "../components/dashboard/DrawerDashboard"
 export const DashboardAdminPage = () => {
+
   return (
     <>
-      <h1>Dashboard Admin</h1>
+     <DrawerDashboard  />
     </>
   )
 }
