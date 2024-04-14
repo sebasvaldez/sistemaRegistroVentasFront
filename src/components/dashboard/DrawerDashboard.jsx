@@ -1,5 +1,4 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 import {
   AppBar,
   Box,
@@ -20,7 +19,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { DashboardListaProductos } from "./DashboardListaProductos";
+import { DashboardVendedores } from "./DashboardVendedores";
+import { DashboardListaClientes } from "./DashboardListaClientes";
+import { DashboardListaVentas } from "./DashboardListaVentas";
 
 const drawerWidth = 240;
 
@@ -29,8 +32,30 @@ export const DrawerDashboard = (props) => {
 
   const navigate = useNavigate();
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const [component, setComponent] = useState(null);
+
+  const handleComponent= (text)=>{
+    switch (text) {
+      case "Vendedores":
+        setComponent(<DashboardVendedores />);
+        break;
+      case "Productos":
+        setComponent(<DashboardListaProductos />);
+        break;
+      case "Ventas":
+        setComponent(<DashboardListaVentas />);
+        break;
+      case "Clientes":
+        setComponent(<DashboardListaClientes />);
+        break;
+      default:
+        setComponent(null);
+        break;
+    }
+  }
 
   const handleLogout = () => {
     logout();
@@ -57,30 +82,20 @@ export const DrawerDashboard = (props) => {
       <Toolbar />
       <Divider />
       <List>
-        {["Vendedores", "Productos", "Ventas", "Clientes"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["Vendedores", "Productos", "Ventas", "Clientes"].map(
+          (text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton onClick={()=>handleComponent(text)}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 
@@ -112,7 +127,7 @@ export const DrawerDashboard = (props) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Bienvenido : {state.user.name}
+              Bienvenido : {state.user.username}
             </Typography>
           </Box>
 
@@ -133,7 +148,7 @@ export const DrawerDashboard = (props) => {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -168,44 +183,30 @@ export const DrawerDashboard = (props) => {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        {component }
+
       </Box>
     </Box>
   );
 };
 
-DrawerDashboard.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
+// onClick={() => {
+//   switch (text) {
+//     case "Vendedores":
+//       navigate("/dashboard/admin/vendedores");
+//       break;
+//     case "Productos":
+//       navigate("/dashboard/admin/productos");
+//       break;
+//     case "Ventas":
+//       navigate("/dashboard/admin/ventas");
+//       break;
+//     case "Clientes":
+//       navigate("/dashboard/admin/clientes");
+//       break;
+//     default:
+//       navigate("/dashboard/admin");
+//       break;
+
+//   }
+// }}

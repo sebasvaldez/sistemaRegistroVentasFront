@@ -7,19 +7,25 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/Authcontext";
 
 export const NavBarDashboard = () => {
-  const { state, logout } = useAuth();
-  const { user } = state;
-
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
+  const { state } = useContext(AuthContext);
+  const { user } = state;
+  console.log(user);
+
+  console.log(state);
   const handleLogout = () => {
     logout();
     navigate("/auth/login");
   };
 
   return (
+    
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>

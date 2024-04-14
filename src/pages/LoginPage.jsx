@@ -34,6 +34,11 @@ export const LoginPage = () => {
     
   }, [isLogged]);
 
+
+
+
+
+
   return (
     <div className="login-container">
       <LoginForm loginClick={loginClick} randomImage={randomImage} />

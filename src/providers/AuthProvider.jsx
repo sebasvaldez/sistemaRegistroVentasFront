@@ -17,6 +17,7 @@ const initialValues = {
     email: "",
     name: "",
     rol: "",
+    username: "",
   },
   isLogged: false,
   token: "",
@@ -26,59 +27,24 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialValues);
   const [loading, setLoading] = useState(true);
 
-  const checkToken = async () => {
-    const cookies = Cookies.get();
-    if (!cookies.token) {
-      setLoading(false);
-      return;
-    }
-    try {
-      const { data } = await verifyTokenRequest();
-      setLoading(false);
-      axiosConnection.interceptors.request.use((config) => {
-        config.headers = {
-          ...config.headers,
-          token: cookies.token,
-        };
-        return config;
-      });
-      const objectStorage = {
-        user: {
-          id: data.id,
-          email: data.email,
-          name: data.username,
-          rol: data.rol,
-        },
-        isLogged: true,
-      };
-
-      dispatch({
-        type: types.auth.login,
-        payload: objectStorage,
-      });
-      if (data) {
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const login = async (user) => {
     try {
       const { data } = await loginRequest(user);
       setLoading(false);
-
+      console.log(data);
       const objectStorage = {
         user: {
           id: data.id,
           email: data.email,
-          name: data.username,
+          name: data.name,
+          username: data.username,
           rol: data.rol,
         },
         isLogged: true,
+        token: data.token,
       };
-
+      console.log(Cookies);
+      Cookies.set("token", data.token);
       dispatch({
         type: types.auth.login,
         payload: objectStorage,
@@ -105,12 +71,45 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  const checkToken = async () => {
+    const cookies = Cookies.get();
+    if (!cookies.token) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const { data } = await verifyTokenRequest(cookies.token);
+
+      if (!data) {
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+
+      const objectStorage = {
+        user: {
+          id: data.id,
+          email: data.email,
+          username: data.username,
+          rol: data.rol,
+        },
+        isLogged: true,
+        token: cookies.token,
+      };
+      dispatch({
+        type: types.auth.login,
+        payload: objectStorage,
+      });
+      if (data) {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ state, login, loading, checkToken, logout }}>
+    <AuthContext.Provider value={{ state, login, loading, logout, checkToken }}>
       {children}
     </AuthContext.Provider>
   );
